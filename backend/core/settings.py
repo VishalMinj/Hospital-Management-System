@@ -34,34 +34,48 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    # required for allauth
-    "django.contrib.sites",
-] + [
-    # Third party extensions
-    "rest_framework",
-    "rest_framework.authtoken",
-    "rest_framework_simplejwt",
-    "rest_framework_simplejwt.token_blacklist",
-    "drf_spectacular",
-    "corsheaders",
-    "dj_rest_auth.registration",
-    "dj_rest_auth",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
-] + [
-    # Internal Applications
-]
+INSTALLED_APPS = (
+    [
+        "django.contrib.admin",
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sessions",
+        "django.contrib.messages",
+        "django.contrib.staticfiles",
+        # required for allauth
+        "django.contrib.sites",
+    ]
+    + [
+        # Third party extensions
+        "rest_framework",
+        "rest_framework.authtoken",
+        "rest_framework_simplejwt",
+        "rest_framework_simplejwt.token_blacklist",
+        "drf_spectacular",
+        "corsheaders",
+        "dj_rest_auth.registration",
+        "dj_rest_auth",
+        "allauth",
+        "allauth.account",
+        "allauth.socialaccount",
+        "allauth.socialaccount.providers.google",
+    ]
+    + [
+        # Internal Applications
+        "users",
+        "authentication",
+        "records",
+    ]
+)
 
 SITE_ID = 1
+
+
+AUTH_USER_MODEL = "users.CustomUser"
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 0.0416
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -153,11 +167,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CORS Config
 
-# CORS_ALLOWED_ORIGINS = [
-#     # "http://localhost:5173",
-#     # "http://127.0.0.1:5173",
-# ]
-CORS_ALLOW_ALL_ORIGINS = os.getenv("DEBUG") == "True"
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+else:
+    CORS_ALLOW_ALL_ORIGINS = False
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ]
 
 
 # Restframework Config
@@ -177,10 +194,14 @@ SOCIALACCOUNT_PROVIDERS = {
         "APP": {
             "client_id": os.getenv("CLIENT_ID"),
             "secret": os.getenv("CLIENT_SECRET"),
-            # "key": "",
-        }
+            "key": "",
+        },
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
     }
 }
+GOOGLE_CALLBACK_URL = os.getenv("GOOGLE_CALLBACK_URL")
 
 
 # Swagger UI Config
@@ -216,7 +237,7 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
-    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "TOKEN_OBTAIN_SERIALIZER": "authentication.serializers.MyTokenObtainPairSerializer",
     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
     "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
@@ -225,14 +246,13 @@ SIMPLE_JWT = {
 }
 
 
-
 # Dj-rest-auth config
 REST_AUTH = {
     "LOGIN_SERIALIZER": "dj_rest_auth.serializers.LoginSerializer",
     "TOKEN_SERIALIZER": "dj_rest_auth.serializers.TokenSerializer",
     "JWT_SERIALIZER": "dj_rest_auth.serializers.JWTSerializer",
     "JWT_SERIALIZER_WITH_EXPIRATION": "dj_rest_auth.serializers.JWTSerializerWithExpiration",
-    "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "JWT_TOKEN_CLAIMS_SERIALIZER": "authentication.serializers.MyTokenObtainPairSerializer",
     "USER_DETAILS_SERIALIZER": "dj_rest_auth.serializers.UserDetailsSerializer",
     "PASSWORD_RESET_SERIALIZER": "dj_rest_auth.serializers.PasswordResetSerializer",
     "PASSWORD_RESET_CONFIRM_SERIALIZER": "dj_rest_auth.serializers.PasswordResetConfirmSerializer",
