@@ -188,20 +188,12 @@ REST_FRAMEWORK = {
 }
 
 
-# Allauth Config
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APP": {
-            "client_id": os.getenv("CLIENT_ID"),
-            "secret": os.getenv("CLIENT_SECRET"),
-            "key": "",
-        },
-        "AUTH_PARAMS": {
-            "access_type": "online",
-        },
-    }
-}
+
 GOOGLE_CALLBACK_URL = os.getenv("GOOGLE_CALLBACK_URL")
+ACCOUNT_AUTO_SIGN_UP = True
+SOCIALACCOUNT_AUTO_LINK = True
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGOUT_ON_GET = True
 
 
 # Swagger UI Config
@@ -212,8 +204,8 @@ SPECTACULAR_SETTINGS = {
 
 # Simple JWT Config
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
@@ -276,4 +268,3 @@ REST_AUTH = {
     "JWT_AUTH_COOKIE_USE_CSRF": False,
     "JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED": False,
 }
-

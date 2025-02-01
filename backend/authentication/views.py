@@ -5,8 +5,12 @@ from dj_rest_auth.views import (
     LoginView,
     LogoutView,
 )
+from .serializers import CustomRegisterSerializer
 from dj_rest_auth.registration.views import RegisterView
-from core import settings
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.views import APIView
+import requests
 
 
 class MyLoginView(LoginView):
@@ -24,13 +28,28 @@ class MyLogoutView(LogoutView):
 
 
 class MyRegisterView(RegisterView):
+    serializer_class=CustomRegisterSerializer
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
         response.data = {}
         return response
 
-
-class GoogleLoginView(SocialLoginView):  # if you want to use Authorization Code Grant, use this
+class GoogleLoginView(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
-    callback_url = settings.GOOGLE_CALLBACK_URL
+    callback_url = "postmessage"
     client_class = OAuth2Client
+
+
+class GoogleLoginCallback(APIView):
+    def post(self, request, *args, **kwargs):
+
+        code = request.GET.get("code")
+
+        if code is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        token_endpoint_url = "http://localhost:8000/auth/google-login/"
+        response = requests.post(url=token_endpoint_url, data={"code": code})
+        if response.status_code==status.HTTP_200_OK:
+            return Response(response.json(), status=status.HTTP_200_OK)
+        return Response({"Error":"Bad request exchange token with gooogle"},status=status.HTTP_400_BAD_REQUEST)

@@ -59,6 +59,7 @@ class CustomUserAdmin(UserAdmin):
                     "role",
                     "gender",
                     "blood_group",
+                    "dob",
                 )
             },
         ),

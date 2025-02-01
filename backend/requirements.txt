@@ -2,8 +2,8 @@ Django
 djangorestframework
 djangorestframework_simplejwt
 drf-spectacular
-django-allauth[socialaccount]
+django-allauth[socialaccount]==0.57.0
 django-cors-headers
-dj-rest-auth
+dj-rest-auth==7.0.0
 python-dotenv
 

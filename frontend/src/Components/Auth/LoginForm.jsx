@@ -1,16 +1,41 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GoogleLoginButton from "./GoogleLoginButton";
+import { useRef } from "react";
+import { LoginAPI } from "../../utils";
+import { useAuthContext } from "../../Contexts";
 
 export default function LoginForm() {
+  const username = useRef(null);
+  const password = useRef(null);
+  const navigate = useNavigate();
+  const { setAuthenticated } = useAuthContext();
+  const LoginHandler = (e) => {
+    e.preventDefault();
+    LoginAPI(username.current.value, password.current.value)
+      .then(() => {
+        username.current.value = "";
+        password.current.value = "";
+        setAuthenticated(true)
+        navigate("/Home");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
-      <form className="flex flex-col w-[86%] border bg-[#FFFFFF] rounded-[1rem] py-[2.5rem] px-[1.25rem] gap-[1rem] pb-[3rem] max-w-[22.5rem]">
+      <form
+        className="flex flex-col w-[86%] border bg-[#FFFFFF] rounded-[1rem] py-[2.5rem] px-[1.25rem] gap-[1rem] pb-[3rem] max-w-[22.5rem]"
+        onSubmit={LoginHandler}
+      >
         <h2 className="text-[2rem] font-semibold text-gray-900">Login</h2>
         <div>
           <label className="text-gray-700 font-medium mb-[0.4rem]">
             Username
           </label>
           <input
+            ref={username}
             type="text"
             className="w-full px-[0.75rem] py-[0.5rem] border rounded-[0.5rem] outline-none"
           />
@@ -20,6 +45,7 @@ export default function LoginForm() {
             Password
           </label>
           <input
+            ref={password}
             type="password"
             className="w-full px-[0.75rem] py-[0.5rem] outline-none border rounded-[0.5rem]"
           />
