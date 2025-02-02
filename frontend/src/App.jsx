@@ -4,9 +4,12 @@ import {
   LoginForm,
   NavBar,
   SignUpForm,
+  Footer,
 } from "./Components";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthenticationPage, Home } from "./Pages";
+import { AuthenticationPage, Homepage } from "./Pages";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthenticationPage, HomePage } from "./Pages";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthRouteProtection, HomeRouteProtection } from "./routes";
 import { AuthProvider } from "./Contexts";
@@ -21,7 +24,7 @@ function App() {
             <Route path="/">
               <Route index element={<Navigate replace to="/Home" />} />
               <Route element={<HomeRouteProtection />}>
-                <Route path="Home" element={<Home />} />
+                <Route path="Home" element={<HomePage />} />
               </Route>
               <Route element={<AuthRouteProtection />}>
                 <Route path="Auth" element={<AuthenticationPage />}>
@@ -53,6 +56,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </AuthProvider>
+      <Footer />
     </>
   );
 }
