@@ -8,6 +8,7 @@ import GreetingSection from "./Home/GreetingSection";
 import Footer from "./Footer/Footer";
 import Card from "./Home/Card";
 import CardLayout from "./Home/CardLayout";
+import Form from "./Appointment/Form";
 
 //image import here
 import HImage from "../assets/images/Hospital_Image.png";
@@ -28,6 +29,7 @@ export {
   Footer,
   Card,
   CardLayout,
+  Form,
 
   //image here
   Logo,
