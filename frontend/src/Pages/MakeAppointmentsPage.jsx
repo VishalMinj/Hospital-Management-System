@@ -1,8 +1,10 @@
+import { Form } from "../Components";
+
 export default function MakeAppointmentsPage() {
   return (
     <>
-      <div className="w-full h-[90dvh]">
-        <h1>hello world</h1>
+      <div className="min-h-[90dvh] py-[2.5rem] w-[100%]">
+        <Form/>
       </div>
     </>
   );
