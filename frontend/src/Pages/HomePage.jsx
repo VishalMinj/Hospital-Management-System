@@ -10,7 +10,7 @@ export default function HomePage() {
         <div className=" flex justify-around rounded-[0.3rem]">
             <CardLayout />
         </div>
-        
+     
     </div>
     </>
   );

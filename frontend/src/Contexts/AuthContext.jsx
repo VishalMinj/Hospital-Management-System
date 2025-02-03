@@ -47,7 +47,7 @@ const AuthProvider = ({ children }) => {
       if(Authenticated){
         refreshAccessToken()
       }
-    }, 8000);
+    }, 1000*60*16);
 
     return () => clearInterval(intervalId);
   }, [Authenticated,Loading]);
