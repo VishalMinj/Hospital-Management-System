@@ -7,8 +7,6 @@ import {
   Footer,
 } from "./Components";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthenticationPage, Homepage } from "./Pages";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthenticationPage, HomePage } from "./Pages";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthRouteProtection, HomeRouteProtection } from "./routes";
