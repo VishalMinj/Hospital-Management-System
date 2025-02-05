@@ -1,11 +1,9 @@
 import {
-  // ConfirmationPage,
   ConfirmEmail,
   LoginForm,
   NavBar,
   SignUpForm,
   Footer,
-  UpcomingAppointments,
 } from "./Components";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import {
