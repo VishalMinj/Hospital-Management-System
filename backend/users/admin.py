@@ -14,11 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
             "email",
             "first_name",
             "last_name",
-            "dob",
-            "phone_number",
             "role",
-            "gender",
-            "blood_group",
         )
 
 
@@ -29,11 +25,7 @@ class CustomUserChangeForm(UserChangeForm):
             "email",
             "first_name",
             "last_name",
-            "dob",
-            "phone_number",
             "role",
-            "gender",
-            "blood_group",
         )
 
 
@@ -44,7 +36,6 @@ class CustomUserAdmin(UserAdmin):
 
     list_display = [
         "username",
-        "age",
         "email",
         "role",
         "is_superuser",
@@ -55,11 +46,7 @@ class CustomUserAdmin(UserAdmin):
             None,
             {
                 "fields": (
-                    "phone_number",
                     "role",
-                    "gender",
-                    "blood_group",
-                    "dob",
                 )
             },
         ),
@@ -69,11 +56,7 @@ class CustomUserAdmin(UserAdmin):
             None,
             {
                 "fields": (
-                    "dob",
-                    "phone_number",
                     "role",
-                    "gender",
-                    "blood_group",
                 )
             },
         )

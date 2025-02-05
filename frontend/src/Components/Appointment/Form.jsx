@@ -32,7 +32,10 @@ export default function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+    const val= e.nativeEvent.submitter.value
+    console.log(val);
+    
+    
   };
 
   return (
@@ -117,7 +120,7 @@ export default function Form() {
           rows={7}
           className="w-full p-2 border border-gray-400 rounded max-h-[250px] resize-none"
           required
-        ></textarea>
+        />
 
         <label htmlFor="date">Appointment Date</label>
         <input
@@ -148,8 +151,8 @@ export default function Form() {
           required
         >
           <option value="">Select Payment Method</option>
-          <option value="Online">Online</option>
-          <option value="Cash on Visit">Cash on Visit</option>
+          <option value="O">Online</option>
+          <option value="C">Cash on Visit</option>
         </select>
 
         <label>
@@ -164,13 +167,15 @@ export default function Form() {
 
         <div className="flex justify-items-stretch mt-[0.5rem] w-[100%] gap-[1.5rem]">
           <button
+            value="save"
             type="submit"
             className=" text-[#118B50] cursor-pointer border-[0.1rem] py-[0.3rem] px-0 rounded flex-1 sm:flex-0 sm:px-[2.3rem]"
-          >
+            >
             Save
           </button>
           <button
-            type="button"
+            value="pay"
+            type="submit"
             className="bg-[#118B50] cursor-pointer text-white py-[0.3rem] rounded flex-1 sm:flex-0 px-0 sm:px-[1.3rem]"
           >
             Continue

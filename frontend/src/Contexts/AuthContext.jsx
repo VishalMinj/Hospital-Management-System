@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  ClearToken,
-  getRefreshToken,
-  EncryptToken
-} from "../utils";
+import { ClearToken, getRefreshToken, EncryptToken } from "../utils";
 
 import { AuthContext } from "./useAuthContext";
 
@@ -13,44 +9,47 @@ const AuthProvider = ({ children }) => {
   const [Loading, setLoading] = useState(true);
 
   const refreshAccessToken = async () => {
-    const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_ENDPOINT}/auth/token/refresh/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          refresh: getRefreshToken(),
-        }),
+    const refersh = getRefreshToken();
+    if (refersh) {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/auth/token/refresh/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            refresh: refersh,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        EncryptToken(data.access, data.refresh);
+        setAuthenticated(true);
+      } else {
+        ClearToken();
+        setAuthenticated(false);
       }
-    );
-    const data = await response.json();
-    if (response.ok) {
-      EncryptToken(data.access, data.refresh);
-      setAuthenticated(true);
-      
-    } else {
-      ClearToken();
-      setAuthenticated(false);
-    }
+    } else setAuthenticated(false);
+
     if (Loading) {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if(Loading){
-      refreshAccessToken()
+    if (Loading) {
+      refreshAccessToken();
     }
     const intervalId = setInterval(() => {
-      if(Authenticated){
-        refreshAccessToken()
+      if (Authenticated) {
+        refreshAccessToken();
       }
-    }, 1000*60*16);
+    }, 1000 * 60 * 16);
 
     return () => clearInterval(intervalId);
-  }, [Authenticated,Loading]);
+  }, [Authenticated, Loading]);
 
   return (
     <AuthContext.Provider value={{ Authenticated, setAuthenticated }}>

@@ -5,7 +5,6 @@ from dj_rest_auth.views import (
     LoginView,
     LogoutView,
 )
-from .serializers import CustomRegisterSerializer
 from dj_rest_auth.registration.views import RegisterView
 from rest_framework.response import Response
 from rest_framework import status
@@ -28,11 +27,7 @@ class MyLogoutView(LogoutView):
 
 
 class MyRegisterView(RegisterView):
-    serializer_class=CustomRegisterSerializer
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        response.data = {}
-        return response
+    pass
 
 class GoogleLoginView(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
