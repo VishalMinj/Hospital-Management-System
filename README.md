@@ -38,3 +38,5 @@
       add environmental variables
    7. Run <code>py manage.py migrate</code> to setup database
    8. Run <code>py manage.py runserver</code> to run server
+
+   <!-- Reminder To run pip install --upgrade setuptools for Razorpay -->

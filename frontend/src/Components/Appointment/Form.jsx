@@ -1,6 +1,62 @@
 import { useState } from "react";
+import { AppointmentAPI, complete_payment, get_paymnetID } from "../../utils";
+import { useRazorpay } from "react-razorpay";
+import { useNavigate } from "react-router-dom";
+
+const AMOUNT = 499;
 
 export default function Form() {
+  const navigate = useNavigate();
+
+  const create_payment = async (order_id,val) => {
+    try {
+      const options = {
+        key: import.meta.env.RAZORPAY_KEY_ID,
+        name: "Hope Hospital",
+        description: "Appointment fee",
+        order_id: order_id,
+        handler: async (response) => {
+          try {
+            const paymentSuccess = await complete_payment(
+              response.razorpay_payment_id,
+              response.razorpay_order_id,
+              response.razorpay_signature,
+              AMOUNT
+            );
+            if (paymentSuccess.status === 201) {
+              const isPaid = await AppointmentAPI(formData, val);
+              if (isPaid) navigate("/CheckAppointment", { replace: true });
+              else navigate("/MakeAppointments", { replace: true });
+            }
+          } catch (error) {
+            console.error("Payment failed during handler:", error);
+            throw error;
+          }
+        },
+        theme: {
+          color: "#008000",
+        },
+      };
+
+      const rzp1 = new Razorpay(options);
+
+      rzp1.on("payment.failed", function (response) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+      });
+
+      rzp1.open();
+    } catch (error) {
+      console.log("Error creating payment:", error);
+      throw error;
+    }
+  };
+
   const [formData, setFormData] = useState({
     PatientName: "",
     age: "",
@@ -10,7 +66,6 @@ export default function Form() {
     reason: "",
     date: "",
     conditions: "",
-    payment: "",
     agree: false,
   });
 
@@ -30,17 +85,33 @@ export default function Form() {
     }
   };
 
+  const { Razorpay } = useRazorpay();
   const handleSubmit = (e) => {
     e.preventDefault();
-    const val= e.nativeEvent.submitter.value
-    console.log(val);
-    
-    
+    const val = e.nativeEvent.submitter.value;
+
+    const processPaymentAndAppointment = async () => {
+      try {
+        if (val === "pay") {
+          const id= await get_paymnetID(AMOUNT);
+          await create_payment(id,val);
+        } else {
+          await AppointmentAPI(formData, val);
+          navigate("/CheckAppointment");
+        }
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+
+    processPaymentAndAppointment();
   };
 
   return (
     <div className="max-w-2xl mx-auto px-[1.5rem] bg-white shadow-lg rounded-lg py-[3rem]">
-      <h2 className="text-[1.7rem] font-bold mb-[1.3rem]">Book an Appointment</h2>
+      <h2 className="text-[1.7rem] font-bold mb-[1.3rem]">
+        Book an Appointment
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <label htmlFor="PatientName">Patient Name</label>
         <input
@@ -142,7 +213,7 @@ export default function Form() {
           className="w-full p-2 border border-gray-400 rounded max-h-[250px] resize-none"
         ></textarea>
 
-        <label htmlFor="payment">Payment Method</label>
+        {/* <label htmlFor="payment">Payment Method</label>
         <select
           id="payment"
           name="payment"
@@ -153,7 +224,7 @@ export default function Form() {
           <option value="">Select Payment Method</option>
           <option value="O">Online</option>
           <option value="C">Cash on Visit</option>
-        </select>
+        </select> */}
 
         <label>
           <input
@@ -170,15 +241,15 @@ export default function Form() {
             value="save"
             type="submit"
             className=" text-[#118B50] cursor-pointer border-[0.1rem] py-[0.3rem] px-0 rounded flex-1 sm:flex-0 sm:px-[2.3rem]"
-            >
+          >
             Save
           </button>
           <button
             value="pay"
             type="submit"
-            className="bg-[#118B50] cursor-pointer text-white py-[0.3rem] rounded flex-1 sm:flex-0 px-0 sm:px-[1.3rem]"
+            className="bg-[#118B50] cursor-pointer text-white py-[0.3rem] rounded whitespace-nowrap flex-1 sm:flex-0 px-0 sm:px-[1.3rem]"
           >
-            Continue
+            Pay Now
           </button>
         </div>
       </form>

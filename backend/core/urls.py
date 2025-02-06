@@ -27,6 +27,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("authentication.urls")),
     path("records/", include("records.urls")),
+    path("payments/", include("payment_gateway.urls")),
     # Swagger UI endpoints
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(

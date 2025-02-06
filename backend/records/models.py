@@ -8,7 +8,6 @@ class AppointmentRequest(models.Model):
         ("F", "Female"),
         ("O", "Other"),
     ]
-    PAYMENT_CHOICES = [("O", "Online"), ("C", "Cash")]
     APPOINTMENT_CHOICES = [
         ("P", "PENDING"),
         ("R", "REJECTED"),
@@ -48,13 +47,6 @@ class AppointmentRequest(models.Model):
     prefered_visit_date = models.DateField(verbose_name="Prefered Visiting Date")
     past_medical_history = models.TextField(verbose_name="Any past medical History")
 
-    payment_method = models.CharField(
-        verbose_name="Payment Status",
-        choices=PAYMENT_CHOICES,
-        max_length=1,
-        null=True,
-        blank=True,
-    )
 
     payment_status = models.BooleanField(verbose_name="Paymet Status")
     verification_status = models.CharField(
