@@ -10,6 +10,10 @@ import Card from "./Home/Card";
 import CardLayout from "./Home/CardLayout";
 import Form from "./Appointment/Form";
 import AppointmentList from "./AppointmentStatus/AppointmentList";
+import Sidebar from "./ReceptionistDashboard/Sidebar";
+import DoctorAppointments from "./DoctorsDashBoard/DoctorAppointments";
+
+
 //image import here
 import HImage from "../assets/images/Hospital_Image.png";
 import Logo from "../assets/images/logo.png";
@@ -31,6 +35,8 @@ export {
   CardLayout,
   Form,
   AppointmentList,
+  Sidebar,
+  DoctorAppointments,
 
   //image here
   Logo,
