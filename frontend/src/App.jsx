@@ -16,59 +16,64 @@ import {
 } from "./Pages";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthRouteProtection, HomeRouteProtection } from "./routes";
-import { AuthProvider } from "./Contexts";
+import { AuthProvider,UserCredentialsProvider } from "./Contexts";
 
 function App() {
   return (
     <>
-      <AuthProvider>
-        <BrowserRouter>
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<HomeRouteProtection />}>
-              <Route index element={<Navigate replace to="/Home" />} />
-              <Route path="Home" element={<HomePage />} />
-              <Route
-                path="MakeAppointments"
-                element={<MakeAppointmentsPage />}
-              />
-              <Route
-                path="CheckAppointment"
-                element={<UpcomingAppointmentsPage />}
-              />
-              <Route path="PrescriptionsPage" element={<PrescriptionsPage />} />
-              <Route path="Invoice" element={<InvoiceRecordPage />} />
-            </Route>
-            <Route element={<AuthRouteProtection />}>
-              <Route path="Auth" element={<AuthenticationPage />}>
+      <UserCredentialsProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <NavBar />
+            <Routes>
+              <Route path="/" element={<HomeRouteProtection />}>
+                <Route index element={<Navigate replace to="/Home" />} />
+                <Route path="Home" element={<HomePage />} />
                 <Route
-                  path="Login"
-                  element={
-                    <GoogleOAuthProvider
-                      clientId={import.meta.env.VITE_CLIENT_ID}
-                    >
-                      <LoginForm />
-                    </GoogleOAuthProvider>
-                  }
+                  path="MakeAppointments"
+                  element={<MakeAppointmentsPage />}
                 />
                 <Route
-                  path="Signup"
-                  element={
-                    <GoogleOAuthProvider
-                      clientId={import.meta.env.VITE_CLIENT_ID}
-                    >
-                      <SignUpForm />
-                    </GoogleOAuthProvider>
-                  }
+                  path="CheckAppointment"
+                  element={<UpcomingAppointmentsPage />}
                 />
-                <Route path="Resend" element={<ConfirmEmail />} />
+                <Route
+                  path="PrescriptionsPage"
+                  element={<PrescriptionsPage />}
+                />
+                <Route path="Invoice" element={<InvoiceRecordPage />} />
               </Route>
-              <Route path="Confirm" element={<InvoiceRecordPage />} />
-            </Route>
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </AuthProvider>
+              <Route element={<AuthRouteProtection />}>
+                <Route path="Auth" element={<AuthenticationPage />}>
+                  <Route
+                    path="Login"
+                    element={
+                      <GoogleOAuthProvider
+                        clientId={import.meta.env.VITE_CLIENT_ID}
+                      >
+                        <LoginForm />
+                      </GoogleOAuthProvider>
+                    }
+                  />
+                  <Route
+                    path="Signup"
+                    element={
+                      <GoogleOAuthProvider
+                        clientId={import.meta.env.VITE_CLIENT_ID}
+                      >
+                        <SignUpForm />
+                      </GoogleOAuthProvider>
+                    }
+                  />
+                  <Route path="Resend" element={<ConfirmEmail />} />
+                </Route>
+                <Route path="Confirm" element={<InvoiceRecordPage />} />
+              </Route>
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </AuthProvider>
+      </UserCredentialsProvider>
     </>
   );
 }

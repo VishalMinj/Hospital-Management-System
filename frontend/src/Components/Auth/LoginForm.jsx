@@ -1,26 +1,35 @@
 import { Link, useNavigate } from "react-router-dom";
 import GoogleLoginButton from "./GoogleLoginButton";
 import { useRef } from "react";
-import { LoginAPI } from "../../utils";
-import { useAuthContext } from "../../Contexts";
+import { LoginAPI, UseDetailsAPI } from "../../utils";
+import { useAuthContext, useUserContext } from "../../Contexts";
 
 export default function LoginForm() {
   const username = useRef(null);
   const password = useRef(null);
   const navigate = useNavigate();
   const { setAuthenticated } = useAuthContext();
-  const LoginHandler = (e) => {
+  const { setuserid, setusername, setfullname, setrole } = useUserContext();
+  const LoginHandler = async (e) => {
     e.preventDefault();
-    LoginAPI(username.current.value, password.current.value)
-      .then(() => {
-        username.current.value = "";
-        password.current.value = "";
-        setAuthenticated(true)
-        navigate("/Home");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    try {
+      await LoginAPI(username.current.value, password.current.value);
+
+      const userDetails = await UseDetailsAPI();
+      setuserid(userDetails.id);
+      setusername(userDetails.username);
+      setfullname(userDetails.full_name);
+      setrole(userDetails.role);
+
+      username.current.value = "";
+      password.current.value = "";
+
+      setAuthenticated(true);
+      navigate("/Home");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

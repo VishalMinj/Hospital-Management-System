@@ -8,7 +8,7 @@ export const complete_payment = async (
 ) => {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_ENDPOINT}/payments/complete/`,
+      `${import.meta.env.VITE_BACKEND_ENDPOINT}/payments/transactions/complete/`,
       {
         method: "POST",
         headers: {
@@ -38,7 +38,7 @@ export const complete_payment = async (
 export const get_paymnetID = async (amount) => {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_ENDPOINT}/payments/create/`,
+      `${import.meta.env.VITE_BACKEND_ENDPOINT}/payments/transactions/create/`,
       {
         method: "POST",
         headers: {

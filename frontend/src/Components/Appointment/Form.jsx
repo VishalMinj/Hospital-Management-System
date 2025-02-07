@@ -8,7 +8,7 @@ const AMOUNT = 499;
 export default function Form() {
   const navigate = useNavigate();
 
-  const create_payment = async (order_id,val) => {
+  const create_payment = async (order_id, val) => {
     try {
       const options = {
         key: import.meta.env.RAZORPAY_KEY_ID,
@@ -93,8 +93,8 @@ export default function Form() {
     const processPaymentAndAppointment = async () => {
       try {
         if (val === "pay") {
-          const id= await get_paymnetID(AMOUNT);
-          await create_payment(id,val);
+          const id = await get_paymnetID(AMOUNT);
+          await create_payment(id, val);
         } else {
           await AppointmentAPI(formData, val);
           navigate("/CheckAppointment");

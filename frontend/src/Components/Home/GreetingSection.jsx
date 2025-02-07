@@ -1,13 +1,16 @@
 import { HImage } from "..";
+import { useUserContext } from "../../Contexts";
 
 export default function GreetingSection() {
+
+  const { username,fullname } = useUserContext();
   return (
     <>
       <section className="flex flex-col md:flex-row justify-between items-center bg-[#fff] w-[100%] sm:w-[auto]">
         <div className="flex flex-col flex-1 md:text-left w-full md:w-1/2 h-[100%] p-[1rem_3.5rem_2rem_3.5rem] sm:p-[1.5rem] justify-center items-start order-2 md:order-none ">
           <h2 className="text-[1.6rem] font-bold md:text-[2rem]">Greetings,</h2>
           <h3 className="text-[1.1rem] font-semibold md:text-[1.4rem]">
-            Vishal Minj
+            {fullname===" "?username:fullname}
           </h3>
           <p className="text-[0.6rem] mt-[0.3rem] md:text-[1rem]">
             We’re here cheering for your well-being!

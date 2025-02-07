@@ -7,3 +7,4 @@ django-cors-headers
 dj-rest-auth==7.0.0
 python-dotenv
 razorpay
+django-jet-reboot

@@ -23,7 +23,12 @@ from drf_spectacular.views import (
     SpectacularRedocView,
 )
 
+
 urlpatterns = [
+    # Admin pannel override endpoint
+    path(r"jet/", include("jet.urls", "jet")),
+    path(r"jet/dashboard/", include("jet.dashboard.urls", "jet-dashboard")),
+    
     path("admin/", admin.site.urls),
     path("auth/", include("authentication.urls")),
     path("records/", include("records.urls")),

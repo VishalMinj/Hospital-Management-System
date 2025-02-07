@@ -1,6 +1,6 @@
 import { getAccessToken } from "../auth/tokenUtils";
 
-export default async function AppointmentAPI(formdata, val) {
+export async function AppointmentAPI(formdata, val) {
   try {
     const url = `${
       import.meta.env.VITE_BACKEND_ENDPOINT
@@ -35,3 +35,75 @@ export default async function AppointmentAPI(formdata, val) {
     throw error;
   }
 }
+
+export const GetAppointmentsAPI = async () => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_ENDPOINT}/records/appointments/`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const UpdateAppointmentsAPI = async (id) => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_ENDPOINT}/records/appointments/${id}/`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+        body: JSON.stringify({
+          payment_status:true
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const DeleteAppointmentsAPI = async (id) => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_ENDPOINT}/records/appointments/${id}/`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getAccessToken()}`,
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+    
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -9,9 +9,11 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView, 
     TokenRefreshView,
 )
+from dj_rest_auth.views import UserDetailsView
 
 urlpatterns = [
     path("login/", MyLoginView.as_view(), name="login-view"),
+    path("user/", UserDetailsView.as_view(), name="user-details-view"),
     path("google-login/", GoogleLoginView.as_view(), name="google-login-view"),
     path("google-login/callback/", GoogleLoginView.as_view(), name="google-login-view"),
     path("logout/", MyLogoutView.as_view(), name="logout-view"),

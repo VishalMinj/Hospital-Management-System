@@ -8,8 +8,10 @@ import {
   getRefreshToken,
   isValiedAccess,
 } from "./auth/tokenUtils";
-import AppointmentAPI from "./appointment/AppointmentAPI";
+import { UseDetailsAPI } from "./auth/UserDetailsAPI";
+import { GetAppointmentsAPI,AppointmentAPI,UpdateAppointmentsAPI,DeleteAppointmentsAPI } from "./appointment/AppointmentAPI";
 import { get_paymnetID,complete_payment } from "./appointment/Payment";
+import { TransectionsAPI } from "./invoiceRecords/TransectionsAPI";
 
 export {
   LoginAPI,
@@ -23,6 +25,12 @@ export {
   isValiedAccess,
   ClearToken,
   AppointmentAPI,
+  GetAppointmentsAPI,
   complete_payment,
-  get_paymnetID
+  get_paymnetID,
+  UpdateAppointmentsAPI,
+  DeleteAppointmentsAPI,
+  TransectionsAPI,
+  UseDetailsAPI
+  
 };

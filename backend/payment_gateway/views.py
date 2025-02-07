@@ -8,6 +8,7 @@ from rest_framework import viewsets
 from .serializers import AppointmentPaymentSerializer, TransactionModelSerializers
 from .utils import RazorpayClient, mail
 from .models import Transaction
+from .serializers import ListTransactionModelSerializers
 
 
 class AppointmentPaymentView(views.APIView):
@@ -48,6 +49,12 @@ class TransactionModelViewSet(
     queryset = Transaction.objects.all()
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        qs = self.get_queryset()
+        queryset = qs.filter(belong_to=request.user)
+        serializer = ListTransactionModelSerializers(queryset, many=True)
+        return Response(serializer.data)
 
 
 class TransactionCompleteView(views.APIView):

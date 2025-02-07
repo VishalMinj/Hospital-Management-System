@@ -38,6 +38,8 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = (
     [
+        "jet.dashboard",
+        "jet",
         "django.contrib.admin",
         "django.contrib.auth",
         "django.contrib.contenttypes",
@@ -67,7 +69,7 @@ INSTALLED_APPS = (
         "users",
         "authentication",
         "records",
-        "payment_gateway"
+        "payment_gateway",
     ]
 )
 
@@ -255,7 +257,7 @@ REST_AUTH = {
     "JWT_SERIALIZER": "dj_rest_auth.serializers.JWTSerializer",
     "JWT_SERIALIZER_WITH_EXPIRATION": "dj_rest_auth.serializers.JWTSerializerWithExpiration",
     "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
-    "USER_DETAILS_SERIALIZER": "dj_rest_auth.serializers.UserDetailsSerializer",
+    "USER_DETAILS_SERIALIZER": "users.serializers.UserDetailsSerializer",
     "PASSWORD_RESET_SERIALIZER": "dj_rest_auth.serializers.PasswordResetSerializer",
     "PASSWORD_RESET_CONFIRM_SERIALIZER": "dj_rest_auth.serializers.PasswordResetConfirmSerializer",
     "PASSWORD_CHANGE_SERIALIZER": "dj_rest_auth.serializers.PasswordChangeSerializer",
@@ -290,3 +292,14 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+
+# admin config
+JET_THEMES = [
+    {"theme": "default", "color": "#118B50", "title": "Default"},
+    {"theme": "green", "color": "#44b78b", "title": "Green"},
+    {"theme": "light-green", "color": "#2faa60", "title": "Light Green"},
+    {"theme": "light-violet", "color": "#a464c4", "title": "Light Violet"},
+    {"theme": "light-blue", "color": "#5EADDE", "title": "Light Blue"},
+    {"theme": "light-gray", "color": "#222", "title": "Light Gray"},
+]
+JET_SIDE_MENU_COMPACT = True

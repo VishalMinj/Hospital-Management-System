@@ -9,7 +9,7 @@ import Footer from "./Footer/Footer";
 import Card from "./Home/Card";
 import CardLayout from "./Home/CardLayout";
 import Form from "./Appointment/Form";
-
+import AppointmentList from "./AppointmentStatus/AppointmentList";
 //image import here
 import HImage from "../assets/images/Hospital_Image.png";
 import Logo from "../assets/images/logo.png";
@@ -30,6 +30,7 @@ export {
   Card,
   CardLayout,
   Form,
+  AppointmentList,
 
   //image here
   Logo,

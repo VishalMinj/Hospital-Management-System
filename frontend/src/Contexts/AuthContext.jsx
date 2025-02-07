@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { ClearToken, getRefreshToken, EncryptToken } from "../utils";
-
 import { AuthContext } from "./useAuthContext";
+import { useUserContext } from "./userUserContext";
+import { UseDetailsAPI } from "../utils";
 
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
+  const { setuserid, setusername, setfullname, setrole } = useUserContext();
   const [Authenticated, setAuthenticated] = useState(false);
   const [Loading, setLoading] = useState(true);
 
@@ -41,6 +43,13 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (Loading) {
       refreshAccessToken();
+      (async()=>{
+        const userDetails = await UseDetailsAPI();
+        setuserid(userDetails.id);
+        setusername(userDetails.username);
+        setfullname(userDetails.full_name);
+        setrole(userDetails.role);
+      })();
     }
     const intervalId = setInterval(() => {
       if (Authenticated) {

@@ -1,14 +1,9 @@
-import AppointmentStatus from "../Components/AppointmentStatus/AppointmentStatus";
-import PaymentStatus from "../Components/AppointmentStatus/PaymentStatus";
-
+import { AppointmentList } from "../Components";
 
 export default function UpcomingAppointmentsPage() {
   return (
-    <>
-      <div className="my-[1rem] px-[0.65rem]">
-        <AppointmentStatus/>
-        <PaymentStatus/>
-      </div>
-    </>
+    <div className="my-[1rem] px-[0.65rem] min-h-[80dvh]">
+      <AppointmentList />
+    </div>
   );
 }

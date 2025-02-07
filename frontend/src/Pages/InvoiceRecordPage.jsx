@@ -1,9 +1,22 @@
+import { useEffect } from "react";
+import { TransectionsAPI } from "../utils";
+import { useState } from "react";
+
 export default function InvoiceRecordPage() {
-  const invoices = [
-    { upid: "INV001", date: "2024-02-01", amount: "$120.50" },
-    { upid: "INV002", date: "2024-02-05", amount: "$220.00" },
-    { upid: "INV002", date: "2024-02-10", amount: "$85.75" },
-  ];
+  const [invoices, setInvoices] = useState([]);
+
+  useEffect(()=>{
+    (async()=>{
+      try {
+        const data= await TransectionsAPI()
+        
+        setInvoices(data);
+      } catch (error) {
+        console.log(error);
+        
+      }
+    })();
+  },[])
   return (
     <>
       <div className="w-full min-h-[90dvh] mx-auto px-6 pt-4 bg-white shadow-lg rounded-2xl">
@@ -21,10 +34,10 @@ export default function InvoiceRecordPage() {
             </thead>
             <tbody>
               {invoices.map((invoice) => (
-                <tr key={invoice.upid} className="hover:bg-gray-50 text-center">
-                  <td className="border p-2">{invoice.date}</td>
-                  <td className="border p-2">{invoice.upid}</td>
-                  <td className="border p-2">{invoice.amount}</td>
+                <tr key={invoice.id} className="hover:bg-gray-50 text-center">
+                  <td className="border p-2">{invoice.time}</td>
+                  <td className="border p-2">{invoice.payment_id}</td>
+                  <td className="border p-2">₹{invoice.amount}</td>
                 </tr>
               ))}
             </tbody>
