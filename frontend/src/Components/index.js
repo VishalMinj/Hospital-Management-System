@@ -9,6 +9,9 @@ import Footer from "./Footer/Footer";
 import Card from "./Home/Card";
 import CardLayout from "./Home/CardLayout";
 import Form from "./Appointment/Form";
+import Sidebar from "./ReceptionistDashboard/Sidebar";
+import DoctorAppointments from "./DoctorsDashBoard/DoctorAppointments";
+
 
 //image import here
 import HImage from "../assets/images/Hospital_Image.png";
@@ -30,6 +33,8 @@ export {
   Card,
   CardLayout,
   Form,
+  Sidebar,
+  DoctorAppointments,
 
   //image here
   Logo,
