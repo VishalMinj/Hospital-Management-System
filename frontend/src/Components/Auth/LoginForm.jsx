@@ -28,7 +28,7 @@ export default function LoginForm() {
       setAuthenticated(true);
       navigate("/Home");
     } catch (error) {
-      console.log(error);
+      console.log(error.error);
     }
   };
 

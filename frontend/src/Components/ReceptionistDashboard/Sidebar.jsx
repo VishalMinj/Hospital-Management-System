@@ -1,22 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
 
-  const SidebarLink = ({ to, label }) => (
-    <button
-      onClick={() => {
-        navigate(to);
-        setIsOpen(false);
-      }}
-      className="py-2 px-4 rounded-md hover:bg-gray-700 transition"
-    >
-      {label}
-    </button>
-  );
+ 
 
   return (
     <>
@@ -24,9 +13,15 @@ export default function Sidebar() {
         <aside className="hidden md:flex flex-col w-60 bg-gray-800 p-6 text-white h-[calc(100vh-10dvh-5dvh)]">
           <h2 className="text-xl font-bold mb-6">Dashboard</h2>
           <nav className="space-y-2 flex flex-col">
-            <SidebarLink to="/" label="Appointment Request" />
-            <SidebarLink to="/bedAllotment" label="Room/Bed Allotment" />
-            <SidebarLink to="/doctorsList" label="Doctor List" />
+            <Link to="Appointments" >
+              Appointment Request
+            </Link>
+            <Link to="Bedallotment">
+              Room/Bed Allotment
+            </Link>
+            <Link to="DoctorsList">
+              Doctor List
+            </Link>
           </nav>
         </aside>
 
@@ -54,9 +49,11 @@ export default function Sidebar() {
             </button>
             <h2 className="text-xl font-bold mb-6">Dashboard</h2>
             <nav className="space-y-2 flex flex-col">
-              <SidebarLink to="/" label="Home" />
-              <SidebarLink to="/appointments" label="Appointments" />
-              <SidebarLink to="/doctorsList" label="Doctor List" />
+              <Link to="/" >
+                Home
+              </Link>
+              <Link to="/appointments" label="Appointments" />
+              <Link to="/doctorsList" label="Doctor List" />
             </nav>
           </aside>
         </div>

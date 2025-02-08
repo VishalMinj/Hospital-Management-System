@@ -51,15 +51,14 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
-    add_fieldsets = UserAdmin.add_fieldsets + (
+    add_fieldsets =(
         (
             None,
             {
-                "fields": (
-                    "role",
-                )
+                "classes": ("wide",),
+                "fields": ("username","email","role", "password1", "password2"),
             },
-        )
+        ),
     )
 
 

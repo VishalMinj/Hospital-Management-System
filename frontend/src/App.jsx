@@ -13,10 +13,21 @@ import {
   MakeAppointmentsPage,
   PrescriptionsPage,
   UpcomingAppointmentsPage,
+  ReceptionistDashboard,
+  DoctorsDashBoard,
+  AppointmentRequest,
+  BedAllotment,
+  DoctorsList
 } from "./Pages";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { AuthRouteProtection, HomeRouteProtection } from "./routes";
-import { AuthProvider,UserCredentialsProvider } from "./Contexts";
+import {
+  AuthRouteProtection,
+  HomeRouteProtection,
+  ReceptionRouteProtection,
+  DoctorRouteProtection,
+  PatientRouteProtection,
+} from "./routes";
+import { AuthProvider, UserCredentialsProvider } from "./Contexts";
 
 function App() {
   return (
@@ -27,21 +38,47 @@ function App() {
             <NavBar />
             <Routes>
               <Route path="/" element={<HomeRouteProtection />}>
-                <Route index element={<Navigate replace to="/Home" />} />
-                <Route path="Home" element={<HomePage />} />
-                <Route
-                  path="MakeAppointments"
-                  element={<MakeAppointmentsPage />}
-                />
-                <Route
-                  path="CheckAppointment"
-                  element={<UpcomingAppointmentsPage />}
-                />
-                <Route
-                  path="PrescriptionsPage"
-                  element={<PrescriptionsPage />}
-                />
-                <Route path="Invoice" element={<InvoiceRecordPage />} />
+                {/* Patient section */}
+                <Route element={<PatientRouteProtection />}>
+                  <Route index element={<Navigate replace to="/Home" />} />
+                  <Route path="Home" element={<HomePage />} />
+                  <Route
+                    path="MakeAppointments"
+                    element={<MakeAppointmentsPage />}
+                  />
+                  <Route
+                    path="CheckAppointment"
+                    element={<UpcomingAppointmentsPage />}
+                  />
+                  <Route
+                    path="PrescriptionsPage"
+                    element={<PrescriptionsPage />}
+                  />
+                  <Route path="Invoice" element={<InvoiceRecordPage />} />
+                </Route>
+                {/* Patient section */}
+
+                {/* Reception section */}
+                <Route element={<ReceptionRouteProtection />}>
+                  <Route path="Reception" element={<ReceptionistDashboard />}>
+                    <Route
+                      path="Appointments"
+                      element={<AppointmentRequest />}
+                    />
+                    <Route path="Bedallotment" element={<BedAllotment />} />
+                    <Route path="DoctorsList" element={<DoctorsList />} />
+                  </Route>
+                </Route>
+                {/* Reception section */}
+
+                {/* Doctor section */}
+                <Route element={<DoctorRouteProtection />}>
+                  <Route
+                    path="DoctorsDashboard"
+                    element={<DoctorsDashBoard />}
+                  />
+                </Route>
+                {/* Doctor section */}
               </Route>
               <Route element={<AuthRouteProtection />}>
                 <Route path="Auth" element={<AuthenticationPage />}>

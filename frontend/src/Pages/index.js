@@ -9,6 +9,7 @@ import ReceptionistDashboard from "./ReceptionistDashboard";
 import AppointmentRequest from "./ReceptionSubpages/AppointmentRequest";
 import BedAllotment from "./ReceptionSubpages/BedAllotment";
 import DoctorsList from "./ReceptionSubpages/DoctorsList";
+import DoctorsDashBoard from "./DoctorsDashBoard";
 
 
 export {
@@ -21,5 +22,6 @@ export {
     AppointmentRequest,
     BedAllotment,
     DoctorsList,
+    DoctorsDashBoard
     
 };
