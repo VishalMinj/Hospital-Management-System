@@ -22,7 +22,7 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
     SpectacularRedocView,
 )
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     # Admin pannel override endpoint
@@ -46,3 +46,4 @@ urlpatterns = [
         name="redoc",
     ),
 ]
+urlpatterns+=staticfiles_urlpatterns()
