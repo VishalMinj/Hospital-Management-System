@@ -10,3 +10,4 @@ razorpay
 django-jet-reboot
 dj-database-url
 gunicorn
+psycopg2
